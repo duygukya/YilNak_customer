@@ -165,7 +165,7 @@ export default function DocumentsPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -186,86 +186,107 @@ export default function DocumentsPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Document Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="border-l-4 border-l-yellow-400">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Toplam Belge</p>
-                  <p className="text-2xl font-bold text-gray-900">{documents.length}</p>
-                </div>
-                <FileText className="h-8 w-8 text-yellow-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-l-4 border-l-green-500">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Faturalar</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {documents.filter((d) => d.type === "invoice").length}
-                  </p>
-                </div>
-                <Receipt className="h-8 w-8 text-green-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-l-4 border-l-blue-500">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">İzin Belgeleri</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {documents.filter((d) => d.type === "permit").length}
-                  </p>
-                </div>
-                <FileCheck className="h-8 w-8 text-blue-600" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-l-4 border-l-purple-500">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Bu Ay</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {documents.filter((d) => d.date.startsWith("2024-01")).length}
-                  </p>
-                </div>
-                <Calendar className="h-8 w-8 text-purple-600" />
-              </div>
-            </CardContent>
-          </Card>
+       {/* Document Stats — white cards with hover animation */}
+<div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+  {/* Toplam Belge */}
+  <Card className="relative overflow-hidden group bg-white text-gray-900
+                   border border-gray-100 rounded-2xl ring-1 ring-gray-100
+                   shadow-sm hover:shadow-2xl hover:shadow-amber-600/10
+                   transition-all duration-500 hover:scale-[1.02]">
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-r from-amber-500/5 to-yellow-500/5" />
+    <CardContent className="p-8 relative z-10">
+      <div className="flex items-center space-x-4">
+        <div className="p-4 rounded-2xl shadow-xl
+                        bg-gradient-to-br from-amber-500 to-yellow-500
+                        text-white transition-all duration-300
+                        group-hover:scale-110 group-hover:rotate-6">
+          <FileText className="h-7 w-7" />
         </div>
+        <div>
+          <h3 className="font-bold text-gray-900 text-lg mb-1">Toplam Belge</h3>
+          <p className="text-3xl font-extrabold leading-none">{documents.length}</p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
 
-        {/* Search and Filter */}
-        <Card className="mb-6">
-          <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <Input
-                    placeholder="Belge adı veya açıklama ile ara..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm">
-                  <Filter className="h-4 w-4 mr-2" />
-                  Filtrele
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+  {/* Faturalar */}
+  <Card className="relative overflow-hidden group bg-white text-gray-900
+                   border border-gray-100 rounded-2xl ring-1 ring-gray-100
+                   shadow-sm hover:shadow-2xl hover:shadow-emerald-600/10
+                   transition-all duration-500 hover:scale-[1.02]">
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-r from-emerald-500/5 to-green-500/5" />
+    <CardContent className="p-8 relative z-10">
+      <div className="flex items-center space-x-4">
+        <div className="p-4 rounded-2xl shadow-xl
+                        bg-gradient-to-br from-emerald-500 to-green-500
+                        text-white transition-all duration-300
+                        group-hover:scale-110 group-hover:rotate-6">
+          <Receipt className="h-7 w-7" />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-900 text-lg mb-1">Faturalar</h3>
+          <p className="text-3xl font-extrabold leading-none">
+            {documents.filter((d) => d.type === "invoice").length}
+          </p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+
+  {/* İzin Belgeleri */}
+  <Card className="relative overflow-hidden group bg-white text-gray-900
+                   border border-gray-100 rounded-2xl ring-1 ring-gray-100
+                   shadow-sm hover:shadow-2xl hover:shadow-cyan-600/10
+                   transition-all duration-500 hover:scale-[1.02]">
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-r from-blue-500/5 to-cyan-500/5" />
+    <CardContent className="p-8 relative z-10">
+      <div className="flex items-center space-x-4">
+        <div className="p-4 rounded-2xl shadow-xl
+                        bg-gradient-to-br from-blue-500 to-cyan-500
+                        text-white transition-all duration-300
+                        group-hover:scale-110 group-hover:rotate-6">
+          <FileCheck className="h-7 w-7" />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-900 text-lg mb-1">İzin Belgeleri</h3>
+          <p className="text-3xl font-extrabold leading-none">
+            {documents.filter((d) => d.type === "permit").length}
+          </p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+
+  {/* Bu Ay */}
+  <Card className="relative overflow-hidden group bg-white text-gray-900
+                   border border-gray-100 rounded-2xl ring-1 ring-gray-100
+                   shadow-sm hover:shadow-2xl hover:shadow-fuchsia-600/10
+                   transition-all duration-500 hover:scale-[1.02]">
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-r from-fuchsia-500/5 to-purple-500/5" />
+    <CardContent className="p-8 relative z-10">
+      <div className="flex items-center space-x-4">
+        <div className="p-4 rounded-2xl shadow-xl
+                        bg-gradient-to-br from-fuchsia-500 to-purple-500
+                        text-white transition-all duration-300
+                        group-hover:scale-110 group-hover:rotate-6">
+          <Calendar className="h-7 w-7" />
+        </div>
+        <div>
+          <h3 className="font-bold text-gray-900 text-lg mb-1">Bu Ay</h3>
+          <p className="text-3xl font-extrabold leading-none">
+            {documents.filter((d) => d.date.startsWith("2024-01")).length}
+          </p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+</div>
+
 
         {/* Document Categories */}
         <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="space-y-6">

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Home, Package, FileText, User, LogOut, Bell, Search, Plus, Calendar, BarChart3, Menu, X } from "lucide-react"
+import Image from "next/image"
 
 export default function CustomerNavigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -30,16 +31,20 @@ export default function CustomerNavigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo and Brand */}
-          <div className="flex items-center space-x-4">
-            <Link href="/dashboard" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-lg flex items-center justify-center">
-                <span className="text-black font-bold text-lg">Y</span>
-              </div>
-              <div className="hidden md:block">
-                <h1 className="text-xl font-bold text-gray-900">YılNak Lojistik</h1>
-                <p className="text-sm text-gray-600">Müşteri Portalı</p>
-              </div>
-            </Link>
+          <div className="flex items-center space-x-4 mr-4 sm:mr-6 lg:mr-10">
+            <Link href="/dashboard" className="flex items-center">
+  <div className="relative h-15 w-[150px]">
+    <Image
+      src="/yilnaklogo.png"        
+      alt="YılNak Lojistik"
+      fill                           
+      sizes="160px"
+      priority                       // header logosu için iyi
+      className="object-contain"     
+    />
+  </div>
+</Link>
+
           </div>
 
           {/* Desktop Navigation */}
@@ -73,7 +78,7 @@ export default function CustomerNavigation() {
 
             <div className="hidden md:flex items-center space-x-2 px-3 py-1 bg-gray-50 rounded-lg">
               <User className="h-4 w-4 text-gray-600" />
-              <span className="text-sm font-medium">Müşteri Adı</span>
+              <span className="text-sm font-medium">Duygu Kaya</span>
             </div>
 
             <Button variant="ghost" size="sm" onClick={handleLogout} className="hidden md:flex">

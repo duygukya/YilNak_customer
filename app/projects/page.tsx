@@ -16,7 +16,8 @@ import {
   FileText,
   AlertCircle,
   CheckCircle2,
-  Truck,
+  Truck, 
+  BarChart3 ,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -101,6 +102,10 @@ export default function ProjectsPage() {
       ],
     },
   ]
+const totalWeightTons = projects.reduce((sum, p) => {
+  const n = parseInt(String(p.totalWeight).replace(/\D/g, ""), 10) || 0; // "450 ton" -> 450
+  return sum + n;
+}, 0);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -142,90 +147,93 @@ export default function ProjectsPage() {
   const selectedProjectData = projects.find((p) => p.id === selectedProject)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+   <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center h-16">
-            <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="mr-4">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Geri
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Projelerim</h1>
-              <p className="text-sm text-gray-600">Proje lojistiği takip ve yönetimi</p>
-            </div>
-          </div>
-        </div>
-      </header>
+     
+<header className="bg-slate-900/60 backdrop-blur-md border-b border-white/10">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center h-16">
+      <Link href="/dashboard">
+        <Button variant="ghost" size="sm" className="mr-4 text-white hover:bg-white/10">
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Geri
+        </Button>
+      </Link>
+      <div>
+        <h1 className="text-xl font-bold text-white">Projelerim</h1>
+        <p className="text-sm text-white/70">Proje lojistiği takip ve yönetimi</p>
+      </div>
+    </div>
+  </div>
+</header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {!selectedProject ? (
           <>
-            {/* Project Stats */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <Card className="border-l-4 border-l-yellow-400">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">Toplam Proje</p>
-                      <p className="text-2xl font-bold text-gray-900">{projects.length}</p>
-                    </div>
-                    <Package className="h-8 w-8 text-yellow-600" />
-                  </div>
-                </CardContent>
-              </Card>
+  <StatCard
+    title="Toplam Proje"
+    value={projects.length}
+    Icon={Package}
+    accentFrom="from-amber-500"
+    accentTo="to-yellow-500"
+    delay={0}
+  />
+  <StatCard
+    title="Aktif Proje"
+    value={projects.filter(p => p.status === "active").length}
+    Icon={Truck}
+    accentFrom="from-blue-500"
+    accentTo="to-cyan-500"
+    delay={100}
+  />
+  <StatCard
+    title="Tamamlanan"
+    value={projects.filter(p => p.status === "completed").length}
+    Icon={CheckCircle2}
+    accentFrom="from-green-500"
+    accentTo="to-emerald-500"
+    delay={200}
+  />
+  <StatCard
+    title="Toplam Ağırlık"
+    value={`${totalWeightTons} ton`}
+    Icon={BarChart3}
+    accentFrom="from-purple-500"
+    accentTo="to-pink-500"
+    delay={300}
+  />
+</div>
 
-              <Card className="border-l-4 border-l-blue-500">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">Aktif Proje</p>
-                      <p className="text-2xl font-bold text-gray-900">
-                        {projects.filter((p) => p.status === "active").length}
-                      </p>
-                    </div>
-                    <Truck className="h-8 w-8 text-blue-600" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-l-4 border-l-green-500">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">Tamamlanan</p>
-                      <p className="text-2xl font-bold text-gray-900">
-                        {projects.filter((p) => p.status === "completed").length}
-                      </p>
-                    </div>
-                    <CheckCircle2 className="h-8 w-8 text-green-600" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-l-4 border-l-purple-500">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">Toplam Ağırlık</p>
-                      <p className="text-2xl font-bold text-gray-900">2.3K ton</p>
-                    </div>
-                    <Package className="h-8 w-8 text-purple-600" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
 
             {/* Projects List */}
             <Tabs defaultValue="active" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="active">Aktif Projeler</TabsTrigger>
-                <TabsTrigger value="planning">Planlama</TabsTrigger>
-                <TabsTrigger value="completed">Tamamlanan</TabsTrigger>
-              </TabsList>
+            <TabsList className="grid w-full grid-cols-3 bg-white/10 p-1 rounded-lg">
+  <TabsTrigger
+    value="active"
+    className="rounded-md text-black/80 hover:bg-white/10
+               data-[state=active]:bg-amber-500 data-[state=active]:text-black"
+  >
+    Aktif Projeler
+  </TabsTrigger>
+
+  <TabsTrigger
+    value="planning"
+    className="rounded-md text-black/80 hover:bg-white/10
+               data-[state=active]:bg-amber-500 data-[state=active]:text-black"
+  >
+    Planlama
+  </TabsTrigger>
+
+  <TabsTrigger
+    value="completed"
+    className="rounded-md text-black/80 hover:bg-white/10
+               data-[state=active]:bg-amber-500 data-[state=active]:text-black"
+  >
+    Tamamlanan
+  </TabsTrigger>
+</TabsList>
+
 
               <TabsContent value="active" className="space-y-4">
                 {projects
@@ -471,4 +479,56 @@ export default function ProjectsPage() {
       </div>
     </div>
   )
+  function StatCard({
+  title,
+  value,
+  Icon,
+  accentFrom,
+  accentTo,
+  delay = 0,
+}: {
+  title: string
+  value: React.ReactNode
+  Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+  accentFrom: string
+  accentTo: string
+  delay?: number
+}) {
+  return (
+    <div
+      className="group relative overflow-hidden rounded-2xl ring-1 ring-white/10
+                 bg-gradient-to-br from-slate-900 to-slate-800 text-white
+                 transition-all duration-500 hover:scale-[1.03] hover:shadow-2xl hover:shadow-amber-600/20
+                 animate-fade-in-up"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      {/* hover’da sağa kayan parlama */}
+      <span
+        className="pointer-events-none absolute inset-0 -translate-x-[150%] group-hover:translate-x-[150%]
+                   transition-transform duration-700 ease-out
+                   bg-gradient-to-r from-transparent via-white/15 to-transparent"
+      />
+      {/* sıcak vurgu (hover’da belirgin) */}
+      <div
+        className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                    bg-gradient-to-r ${accentFrom} ${accentTo}`}
+      />
+      <div className="relative z-10 p-6 sm:p-8">
+        <div className="flex items-center gap-4">
+          <div className={`p-4 rounded-2xl shadow-xl transition-all duration-300
+                           group-hover:scale-110 group-hover:rotate-6
+                           bg-gradient-to-br ${accentFrom} ${accentTo}`}>
+            <Icon className="h-7 w-7 text-white" />
+          </div>
+          <div className="animate-float-slow">
+            <h3 className="text-lg font-bold text-white">{title}</h3>
+            <p className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white/90">{value}</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  )
+}
+
 }

@@ -73,16 +73,28 @@ export default function QuotePage() {
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="min-h-screen relative overflow-hidden">
+      
+  <div className="absolute inset-0 z-0">
+    <img
+      src="/yilnak1.jpg"       // kendi görselin
+      alt="YılNak arka plan"
+      className="w-full h-full object-cover"
+    />
+  </div>
+ 
+
+        <div className="absolute inset-0 bg-black/60 z-10" />
+
+        <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center py-16">
             <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
               <CheckCircle className="h-8 w-8 text-green-600" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Teklif Talebiniz Alındı!</h1>
-            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+            <h1 className="text-3xl font-bold text-white mb-4 drop-shadow-lg">Teklif Talebiniz Alındı!</h1>
+            <p className="text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-md">
               Teklif talebiniz başarıyla iletildi. Uzman ekibimiz en kısa sürede sizinle iletişime geçecek. Teklif
-              numaranız: <strong>YN-QUOTE-2024-001</strong>
+              numaranız: <strong className="text-yellow-400">YN-QUOTE-2024-001</strong>
             </p>
             <div className="space-x-4">
               <Link href="/dashboard">
@@ -90,6 +102,7 @@ export default function QuotePage() {
               </Link>
               <Button
                 variant="outline"
+                className="border-white text-white hover:bg-white hover:text-black bg-transparent"
                 onClick={() => {
                   setIsSubmitted(false)
                   setStep(1)
@@ -118,26 +131,37 @@ export default function QuotePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen relative overflow-hidden">
+  <div className="absolute inset-0 z-0">
+    <img
+      src="/yilnak1.jpg"       // kendi görselin
+      alt="YılNak arka plan"
+      className="w-full h-full object-cover"
+    />
+  </div>
+  <div className="absolute inset-0 bg-black/50 z-10" />
+
+
+
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="relative z-20 bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center h-16">
             <Link href="/dashboard">
-              <Button variant="ghost" size="sm" className="mr-4">
+              <Button variant="ghost" size="sm" className="mr-4 text-white hover:bg-white/10">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Geri
               </Button>
             </Link>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">Teklif Talebi</h1>
-              <p className="text-sm text-gray-600">Lojistik ihtiyaçlarınız için teklif alın</p>
+              <h1 className="text-xl font-bold text-white drop-shadow-md">Teklif Talebi</h1>
+              <p className="text-sm text-gray-200 drop-shadow-sm">Lojistik ihtiyaçlarınız için teklif alın</p>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Progress Steps */}
         <div className="mb-8">
           <div className="flex items-center justify-center space-x-4">
@@ -145,20 +169,20 @@ export default function QuotePage() {
               <div key={stepNumber} className="flex items-center">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                    step >= stepNumber ? "bg-yellow-400 text-black" : "bg-gray-200 text-gray-600"
+                    step >= stepNumber ? "bg-yellow-400 text-black" : "bg-white/20 text-white backdrop-blur-sm"
                   }`}
                 >
                   {stepNumber}
                 </div>
                 {stepNumber < 3 && (
-                  <div className={`w-16 h-1 mx-2 ${step > stepNumber ? "bg-yellow-400" : "bg-gray-200"}`} />
+                  <div className={`w-16 h-1 mx-2 ${step > stepNumber ? "bg-yellow-400" : "bg-white/20"}`} />
                 )}
               </div>
             ))}
           </div>
           <div className="flex justify-center mt-4">
             <div className="text-center">
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-white drop-shadow-md">
                 {step === 1 && "Hizmet Türü"}
                 {step === 2 && "Sevkiyat Detayları"}
                 {step === 3 && "İletişim Bilgileri"}
@@ -169,7 +193,7 @@ export default function QuotePage() {
 
         <form onSubmit={handleSubmit}>
           {step === 1 && (
-            <Card>
+            <Card className="bg-white/90 backdrop-blur-md border-white/20">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Calculator className="h-5 w-5 text-yellow-600" />
@@ -213,7 +237,7 @@ export default function QuotePage() {
           )}
 
           {step === 2 && (
-            <Card>
+            <Card className="bg-white/90 backdrop-blur-md border-white/20">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <Package className="h-5 w-5 text-yellow-600" />
@@ -327,7 +351,7 @@ export default function QuotePage() {
           )}
 
           {step === 3 && (
-            <Card>
+            <Card className="bg-white/90 backdrop-blur-md border-white/20">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <FileText className="h-5 w-5 text-yellow-600" />
